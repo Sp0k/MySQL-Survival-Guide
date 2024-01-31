@@ -10,17 +10,29 @@ Up-to: Lecture 3
 Based on Dr. Beiko and Dr. Malloch's work
 
 ## Utilities for MySQL
-### Start the MySQL dbs
-sudo systemctl start mysql<br>or<br>startMySQL (Personal script)
+#### Start the MySQL dbs
+```bash
+sudo systemctl start mysql
+```
+or<br>startMySQL (Personal script)
 
-### Stop the MySQL dbs
-sudo sustemctl stop mysql<br>or<br>stopMySQL (Personal script)
+#### Stop the MySQL dbs
+```bash
+sudo sustemctl stop mysql
+```
+or<br>stopMySQL (Personal script)
 
-### Connect to the server
-sudo mysql -u root<br>or<br>connectMySQL (Personal script)
+#### Connect to the server
+```bash
+sudo mysql -u root
+```
+or<br>connectMySQL (Personal script)
 
-### Read a file into the server
-sudo mysql -u root < [filename]<br>or<br>readMySQL [filename] (Personal script)
+#### Read a file into the server
+```bash
+sudo mysql -u root < [filename]
+```
+or<br>readMySQL [filename] (Personal script)
 
 ## Inside MySQL
 ### Navigation
@@ -160,4 +172,57 @@ SELECT [columns]
   FROM [table]
   WHERE [attribute] NOT LIKE "_A%";
 ```
+#### CREATE
+The operations can be used directly in the MySQL server or written on a file along with the INSERT operations and read and ran into the server later.
 
+##### DATABASE
+There is two options to create new databases.<br>
+Option 1: Don't create a new one on top of an old one.
+```mysql
+-- Ensures if the database already exist it won't be overwrittten
+CREATE DATABASE IF NOT EXISTS [NameDB];
+```
+Option 2: Ensure a new one is created (Will cause an error if the database does not already exist)
+```mysql
+-- Erases the database and recreates it
+DROP DATABASE [NameDB];
+CREATE DATABASE [NameDB];
+```
+
+* A database name usually has a first capitalized letter and ends with a capitalized DB, i.e. CitiesDB
+
+Both option of database creation can also be used together to ensure less error.
+```mysql
+DROP DATABASE IF EXISTS [NameDB];
+CREATE DATABASE IF NOT EXISTS [NameDB];
+```
+##### TABLE
+There is also two options to create new tables. The same logic can also be used to combine both options.<br>
+Option 1: Don't create a table with the same name as an existing one
+```mysql
+CREATE TABLE IF NOT EXISTS [table_name] (...);
+```
+Option 2: Ensure a new fresh table is created
+```mysql
+DROP TABLE [table_name];
+CREATE TABLE [table_name];
+```
+When creating a new table, one should add parameters to the table
+```mysql
+CREATE TABLE [table_name] (
+  column_1 DATATYPE_CONSTRAINT(S),
+  column_2 DATATYPE_CONSTRAINT(S),
+  PRIMARY KEY (column_1,...)
+);
+```
+Example of a table creation taken from Dr. Beiko's slides:
+```mysql
+CREATE TABLE cities_simplified (
+  city_id INT,
+  city_name VARCHAR(100) NOT NULL,
+  country_name VARCHAR(100) NOT NULL,
+  year_founded INT,
+  PRIMARY KEY (city_id),
+  UNIQUE(country_name),
+  UNIQUE(city_name, year_founded)
+);
