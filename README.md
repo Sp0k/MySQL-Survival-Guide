@@ -26,11 +26,22 @@ or<br>stopMySQL (Personal script)
 ```bash
 sudo mysql -u root
 ```
+or
+```
+mysql -u 'username' -p 'password'
+```
+Where <em>-p 'password'</em> is only required if the user
+has a password set.
+
 or<br>connectMySQL (Personal script)
 
 #### Read a file into the server
 ```bash
 sudo mysql -u root < [filename]
+```
+or
+```
+mysql -u root -p 'password' < [filename]
 ```
 or<br>readMySQL [filename] (Personal script)
 
@@ -226,3 +237,4 @@ CREATE TABLE cities_simplified (
   UNIQUE(country_name),
   UNIQUE(city_name, year_founded)
 );
+```
