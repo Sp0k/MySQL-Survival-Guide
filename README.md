@@ -391,4 +391,67 @@ Table:
 DROP TABLE table_name;
 ```
 
+#### INSERT
+The INSERT statement is used to add new entities(rows) to a table.
+```mysql
+INSERT INTO table_name(column_name1, column_name2, column_name3, ...)
+VALUES (value1, value2, value3, ...);
+```
+or
+```mysql
+INSERT INTO table_name(column_name1, column_name2, column_name3, ...)
+VALUES
+(value1, value2, value3, ...),
+(value1, value2, value3, ...),
+(value1, value2, value3, ...),
+...
+(value1, value2, value3, ...);
+```
 
+One can also use the IGNORE keyword in order to force the entry of
+the data even if it violates the constraints. IGNORE will only result
+in a warning. But this must be used with precaution.
+
+#### UPDATE
+The UPDATE statement is used to update a table with new values for 
+columns and entities.
+```mysql
+UPDATE table_name
+  SET column1 = value1, column2 = value2, column3 = value3, ...
+  WHERE conditions;
+```
+
+#### DELETE
+The DELETE statement is used to delete a row in a table.
+```mysql
+DELETE FROM table_name
+  WHERE conditions;
+```
+
+#### Derived Attributes
+In addition to returning values contained in the table, one can combine
+values from different columns using various operators.
+
+* Mathematical operators: +, -, *, /
+* Text operators: CONCAT()
+
+The idea is to be able to use them to mix values, for example calculating the population density:
+```mysql
+SELECT population/land_area
+  FROM table_name
+  WHERE condition;
+```
+<strong>Rounding</strong><br>
+ROUND(attribute, digits): Round attribute to digits of precision (default is zero).
+
+```mysql
+SELECT ROUND(1.1111); -- Will be equal to 1
+SELECT ROUND(1.1111, 2); -- Will be equal to 1.11
+```
+
+The ROUND command can renamed with an alias using AS.
+```mysql
+SELECT column1, column2, column3, ROUND(column3/column2, 1) AS alias
+  FROM table_name;
+```
+** Reminder that the WHERE clause does not recognize aliases. **
