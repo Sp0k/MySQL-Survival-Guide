@@ -28,10 +28,10 @@ sudo mysql -u root
 ```
 or
 ```
-mysql -u 'username' -p 'password'
+mysql -u 'username' -p
 ```
-Where <em>-p 'password'</em> is only required if the user
-has a password set.
+Where <em>-p</em> is only added if the user has a password set. A
+prompt will appear asking for the password.
 
 or<br>connectMySQL (Personal script)
 
@@ -41,9 +41,12 @@ sudo mysql -u root < [filename]
 ```
 or
 ```
-mysql -u root -p 'password' < [filename]
+mysql -u root -p < [filename]
 ```
 or<br>readMySQL [filename] (Personal script)
+
+
+** <em>All of these can also be done through workbench</em> **
 
 ## Inside MySQL
 ### Navigation
@@ -299,3 +302,93 @@ CREATE TABLE cities_simplified(
   UNIQUE(city_name, year_founded)
 );
 ```
+#### ALTER
+The ALTER query can be used to modified the data already saved in the
+tables.
+
+Be careful, sometimes, modification will be rejected if it contradicts
+the data already in the database.
+
+<strong>Table Examples:</strong><br>
+Add a column:
+```mysql
+ALTER TABLE table_name
+  ADD (new_colname DATATYPE constraints);
+```
+Drop a column:
+```mysql
+ALTER TABLE table_name 
+  DROP COLUMN column_name;
+```
+Modify column type:
+```mysql
+ALTER TABLE table_name 
+  MODIFY COLUMN column_name new_datatype;
+```
+Change column name:
+```mysql
+ALTER TABLE table_name 
+  CHANGE old_column_name new_column_name;
+```
+Add primary key:
+```mysql
+ALTER TABLE table_name 
+  ADD PRIMARY KEY (column_name);
+```
+Drop primary key:
+```mysql
+ALTER TABLE table_name 
+  DROP PRIMARY KEY;
+```
+Add foreign key:
+```mysql
+ALTER TABLE table_name 
+  ADD CONSTRAINT fk_name 
+  FOREIGN KEY (column_name) 
+  REFERENCES parent_table(parent_column_name);
+```
+Drop foreign key:
+```mysql
+ALTER TABLE table_name 
+  DROP FOREIGN KEY fk_name;
+```
+Add index:
+```mysql
+ALTER TABLE table_name 
+  ADD INDEX index_name (column_name);
+```
+Drop index:
+```mysql
+ALTER TABLE table_name 
+  DROP INDEX index_name;
+```
+Rename table:
+```mysql
+ALTER TABLE old_table_name 
+  RENAME TO new_table_name;
+```
+Add unique constraint:
+```mysql
+ALTER TABLE table_name 
+  ADD UNIQUE (column_name);
+```
+Drop unique constraint:
+```mysql
+ALTER TABLE table_name 
+  DROP INDEX index_name;
+```
+
+#### DROP
+Deletes the specified table or database.
+
+Database:
+```mysql
+DROP DATABASE Database_nameDB;
+```
+
+Table:
+```mysql
+DROP TABLE table_name;
+```
+
+
