@@ -3,7 +3,7 @@ This is my personal MySQL help file. It is catered for Ubuntu.
 
 It was written for Dalhousie's CSCI 2141: Intro to Databases.
 
-Last Updated: 2024-01-31<br>
+Last Updated: 2024-02-08<br>
 Up-to: Lecture 3
 
 @author: Gab Savard<br>
@@ -234,6 +234,67 @@ CREATE TABLE cities_simplified (
   country_name VARCHAR(100) NOT NULL,
   year_founded INT,
   PRIMARY KEY (city_id),
+  UNIQUE(country_name),
+  UNIQUE(city_name, year_founded)
+);
+```
+##### DATATYPES
+<strong>Character datatypes:</strong>
+- VARCHAR(n): Variable-length character string (n <= 65535)
+- TEXT: Unstructured text. Can be much longer, but very slow.
+
+<strong>Numeric datatypes:</strong>
+- INT: Integer (signed by default), signed range is (-2147483647, 2147483647)
+- FLOAT, DOUBLE: 32-bit/64-bit floating point
+- DECIMAL(x,y): x represent the total digits, y represent the number of digits after the decimal point. (ex: DECIMAL(314, 2) = 3.14).
+
+##### CONSTRAINTS
+Define limitations on columns. You cannot insert data into a table
+that violates those constraints.
+
+- NOT NULL: Column must be defined for every entity that is added.
+- UNIQUE: Duplicate values cannot be added.
+- DEFAULT: If no value is specified, set the value to this.
+- CHECK: Allow entity to be added only if column of table values
+satisfy constraints.
+
+<strong>Examples:</strong>
+These examples are taken directly from Dr. Beiko's slides.
+
+Create table using DEFAULT:
+```mysql
+CREATE TABLE cities_simplified(
+  city_id INT,
+  city_name VARCHAR(100) NOT NULL,
+  country_name VARCHAR(100) NOT NULL,
+  year_founded INT DEFAULT 2024,
+  PRIMARY KEY(city_id),
+  UNIQUE(country_name),
+  UNIQUE(city_name, year_founded)
+);
+```
+Create table using CHECK constraints:
+```mysql
+CREATE TABLE cities_simplified(
+  city_id INT,
+  city_name VARCHAR(100) NOT NULL,
+  country_name VARCHAR NOT NULL,
+  year_founded INT
+    CONSTRAINTS 'year_range'
+    CHECK(year_founded BETWEEN -5000 and 2024),
+  PRIMARY KEY(city_id),
+  UNIQUE(country_name),
+  UNIQUE(city_name, year_founded)
+);
+```
+Create table with AUTO_INCREMENT:
+```mysql
+CREATE TABLE cities_simplified(
+  city_id INT AUTO_INCREMENT,
+  city_name VARCHAR(100) NOT NULL,
+  country_name VARCHAR(100) NOT NULL,
+  year_founded INT,
+  PRIMARY KEY(city_id),
   UNIQUE(country_name),
   UNIQUE(city_name, year_founded)
 );
