@@ -3,8 +3,7 @@ This is my personal MySQL help file. It is catered for Ubuntu.
 
 It was written for Dalhousie's CSCI 2141: Intro to Databases.
 
-Last Updated: 2024-02-08<br>
-Up-to: Lecture 3
+Last Updated: 2024-02-09
 
 @author: Gab Savard<br>
 Based on Dr. Beiko and Dr. Malloch's work
@@ -455,3 +454,77 @@ SELECT column1, column2, column3, ROUND(column3/column2, 1) AS alias
   FROM table_name;
 ```
 ** Reminder that the WHERE clause does not recognize aliases. **
+
+#### Aggregation
+Aggregation can be summarized as "give me a row that summarizes one or
+more rows in the table". In order to perform an aggregation, one must
+use aggregation operators.
+
+- COUNT: total rows satisfying the criteria.
+- MAX, MIN of values in a given column for all rows satisfying the 
+criteria
+- SUM, AVG of values in a given column for all rows satisfying the
+criteria.
+
+##### COUNT
+How many rows satisfy a given condition?
+```mysql
+SELECT COUNT(*) FROM table_name;
+```
+```mysql
+SELECT COUNT(column) FROM table_name;
+```
+```mysql
+SELECT COUNT(column)
+  FROM table_name
+  WHERE condition;
+```
+
+##### DISTINCT
+Shows each of the distinct values once, even if they appear more than
+once in the table.
+
+<strong>Examples:</strong><br>
+Display distinct values:
+```mysql
+SELECT DISTINCT column
+  FROM table_name;
+```
+Display the number of distinct values
+```mysql
+SELECT COUNT(DISTINCT(column)) AS 'name'
+  FROM table_name;
+```
+
+##### MIN / MAX / SUM / AVG
+<strong>Playing with numbers</strong><br>
+Identify the average value of an attribute
+```mysql
+SELECT AVG(column) AS 'name'
+  FROM table_name;
+```
+Identify the max value of an attribute
+```mysql
+SELECT MAX(column) FROM table_name;
+```
+Identify the min value of an attribute
+```mysql
+SELECT MIN(column) FROM table_name;
+```
+Identify the sum of the value of an attribute
+```mysql
+SELECT SUM(column) FROM table_name;
+```
+
+<strong>Playing with strings, sort of...</strong><br>
+MAX returns the last value in alphabetical order
+```mysql
+SELECT MAX(column) FROM table_name;
+```
+MIN returns the first value in alphabetical order
+```mysql
+SELECT MIN(column) FROM table_name;
+```
+AVG returns nothing, the average of strings as no meaning.
+
+SUM does not apply to strings.
