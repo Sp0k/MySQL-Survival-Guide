@@ -9,13 +9,13 @@ Last Updated: 2024-02-09
 Based on Dr. Beiko and Dr. Malloch's work
 
 ## Utilities for MySQL
-#### Start the MySQL dbs
+#### Start the MySQL dbms
 ```bash
 sudo systemctl start mysql
 ```
 or<br>startMySQL (Personal script)
 
-#### Stop the MySQL dbs
+#### Stop the MySQL dbms
 ```bash
 sudo sustemctl stop mysql
 ```
@@ -47,9 +47,9 @@ or<br>readMySQL [filename] (Personal script)
 
 ** <em>All of these can also be done through workbench</em> **
 
-## Inside MySQL
+## Inside MySQL-SERVER
 ### Navigation
-You will need specific commands to traverse the dbs. They are listed below
+You will need specific commands to traverse the dbms. They are listed below
 
 #### SHOW
 The equivalent of 'ls' in bash.
@@ -65,7 +65,7 @@ USE DatabaseDB
 ```
 * Usually, databases name will be capitalized and have a DB at the end i.e. DatabaseDB. Table names will be lowercase.
 
-### Queries
+## Queries
 #### SELECT
 The SELECT query generates customized results. It does NOT modify the data in the table!
 
