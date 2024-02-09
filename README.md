@@ -47,7 +47,7 @@ or<br>readMySQL [filename] (Personal script)
 
 ** <em>All of these can also be done through workbench</em> **
 
-## Inside MySQL-SERVER
+## Inside MySQL-Server
 ### Navigation
 You will need specific commands to traverse the dbms. They are listed below
 
