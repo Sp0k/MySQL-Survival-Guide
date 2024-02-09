@@ -12,10 +12,10 @@ Based on Dr. Beiko and Dr. Malloch's work
 1. [Utilities for MySQL](#utilities)
 2. [Inside MySQL-Server](#inside)
 3. [Queries](#Queries)
-  1. [Select](#SELECT)
-  2. [Create](#CREATE)
-  3. [Alter](#ALTER)
-7. [Aggregation](#Aggregation)
+    1. [Select](#SELECT)
+    2. [Create](#CREATE)
+    3. [Alter](#ALTER)
+4. [Aggregation](#Aggregation)
 
 ## Utilities for MySQL <a name="utilities"></a>
 #### Start the MySQL dbms
