@@ -9,13 +9,13 @@ Last Updated: 2024-02-09
 Based on Dr. Beiko and Dr. Malloch's work
 
 ## File contents
-[Utilities for MySQL] (#Utilities for MySQL)
-[Inside MySQL-Server] (#Inside MySQL-Server)
-[Queries] (#Queries)
-[Select] (#SELECT)
-[Create] (#CREATE)
-[Alter] (#ALTER)
-[Aggregation] (#Aggregation)
+[Utilities for MySQL](#Utilities)
+[Inside MySQL-Server](#Inside)
+[Queries](#Queries)
+[Select](#SELECT)
+[Create](#CREATE)
+[Alter](#ALTER)
+[Aggregation](#Aggregation)
 
 ## Utilities for MySQL
 #### Start the MySQL dbms
