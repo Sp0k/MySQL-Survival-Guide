@@ -9,7 +9,7 @@ Last Updated: 2024-02-09
 Based on Dr. Beiko and Dr. Malloch's work
 
 ## File contents
-1. [Utilities for MySQL](#Utilities)
+1. [Utilities for MySQL](#Utilities for MySQL)
 2. [Inside MySQL-Server](#Inside)
 3. [Queries](#Queries)
 4. [Select](#SELECT)
