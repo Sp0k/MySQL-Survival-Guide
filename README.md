@@ -9,7 +9,7 @@ Last Updated: 2024-02-09
 Based on Dr. Beiko and Dr. Malloch's work
 
 ## File contents
-1. [Utilities for MySQL](#Utilities for MySQL)
+1. [Utilities for MySQL](#Utilities)
 2. [Inside MySQL-Server](#Inside)
 3. [Queries](#Queries)
 4. [Select](#SELECT)
@@ -17,7 +17,7 @@ Based on Dr. Beiko and Dr. Malloch's work
 6. [Alter](#ALTER)
 7. [Aggregation](#Aggregation)
 
-## Utilities for MySQL
+## Utilities for MySQL <a name="Utilities"></a>
 #### Start the MySQL dbms
 ```bash
 sudo systemctl start mysql
@@ -56,7 +56,7 @@ or<br>readMySQL [filename] (Personal script)
 
 ** <em>All of these can also be done through workbench</em> **
 
-## Inside MySQL-Server
+## Inside MySQL-Server <a name="Inside"></a>
 ### Navigation
 You will need specific commands to traverse the dbms. They are listed below
 
