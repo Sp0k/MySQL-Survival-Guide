@@ -35,7 +35,7 @@ or<br>stopMySQL (Personal script)
 sudo mysql -u root
 ```
 or
-```
+```bash
 mysql -u 'username' -p
 ```
 Where <em>-p</em> is only added if the user has a password set. A
@@ -45,11 +45,11 @@ or<br>connectMySQL (Personal script)
 
 #### Read a file into the server
 ```bash
-sudo mysql -u root < [filename]
+sudo mysql -u root < file_name
 ```
 or
-```
-mysql -u root -p < [filename]
+```bash
+mysql -u root -p < file_name
 ```
 or<br>readMySQL [filename] (Personal script)
 
@@ -79,19 +79,19 @@ USE DatabaseDB
 The SELECT query generates customized results. It does NOT modify the data in the table!
 
 ```mysql
-SELECT [columns]
-  FROM [table]
-  WHERE [criteria]
-  ORDER BY [column_name]
-  LIMIT [max_rows];
-
+SELECT columns
+  FROM table_name
+  WHERE criteria
+  ORDER BY column_name
+  LIMIT max_rows;
+```
+```mysql
 SELECT * -- retrive and display every columns from a table. Still requires a FROM attribute.
 ```
 #### AS
 Gives a display name to a column when printing the results of the query.
 ```mysql
-SELECT [columns] AS 'name'
-  [attribute] AS 'name1', [attribute] AS 'name2'
+SELECT column1 AS 'name1' column2 AS 'name2', column3 AS 'name3', ...
   FROM [table];
 ```
 #### WHERE
@@ -114,9 +114,9 @@ These operators mean the same thing as what they would mean in different coding 
 
 Example:
 ```mysql
-SELECT [columns]
-  FROM [table]
-  WHERE [attribute] = 'value'; -- This case looks for the elements that match the value.
+SELECT column1, column2, column3, ...
+  FROM table_name
+  WHERE column = value; -- This case looks for the elements that match the value.
 ```
 ##### Logical
 Allow more than one condition for the different attributes.
@@ -126,18 +126,18 @@ Allow more than one condition for the different attributes.
 
 Example:
 ```mysql
-SELECT [columns]
-  FROM [table]
-  WHERE ([attribute_1] = 'value_1' OR [attribute_1] = 'value_2') AND NOT attribute_2 = 'value_3';
+SELECT column1, column2, column3, ...
+  FROM table_name
+  WHERE (column1 = 'value_1' OR column1 = 'value_2') AND NOT column2 = 'value_3';
 ```
 ##### Set
 The set operator IN (the only one seen in this guide) is a shorthand for multiple OR operator for the same attribute.
 
 Example:
 ```mysql
-SELECT [columns]
-  FROM [table]
-  WHERE [column] IN (value_1, value_2, ...);
+SELECT column1, column2, column3, ...
+  FROM table_name
+  WHERE column IN (value_1, value_2, ...);
 ```
 ##### LIKE
 Like mentioned above, the LIKE operator adds more flexibility to string matching. It is still limited though, it can't easily match:
@@ -157,42 +157,42 @@ Examples:<br>
 LIKE with '%'
 ```mysql
 -- Looks for everything that starts with "A" or "a"
-SELECT [columns]
-  FROM [table]
-  WHERE [attribute] LIKE "%A";
+SELECT column1, column2, column3, ...
+  FROM table_name
+  WHERE column LIKE "%A";
 
 -- Looks for everything that does not contain "A" or "a"
-SELECT [columns]
-  FROM [table]
-  WHERE [attribute] NOT LIKE "%A%";
+SELECT column1, column2, column3, ...
+  FROM table_name
+  WHERE column NOT LIKE "%A%";
 ```
 LIKE wildcard matching
 ```mysql
 -- Looks for everything containing 'rain'
-SELECT [columns]
-  FROM [tables]
-  WHERE [attribute] LIKE '%rain%';
+SELECT column1, column2, column3, ...
+  FROM table_name
+  WHERE column LIKE '%rain%';
 
 -- Looks for everything starting by a character followed by 'rain'
-SELECT [columns]
-  FROM [table]
-  WHERE [attribute] LIKE '_rain';
+SELECT column1, column2, column3, ...
+  FROM table_name
+  WHERE column LIKE '_rain';
 -- Each _ added means one extra character.
 ```
 Multiple LIKE conditions
 ```mysql
 -- Looks for every string where at least one of them starts with 'A'
-SELECT [columns]
-  FROM [table]
-  WHERE [attribute] LIKE "A% %" -- First word
-  OR [attribute] LIKE "% A%"; -- Non-first word
+SELECT column1, column2, column3, ...
+  FROM table_name
+  WHERE column LIKE "A% %" -- First word
+    OR column LIKE "% A%"; -- Non-first word
 ```
 NOT LIKE
 ```mysql
 -- Looks for every string who's second character is not "A"
-SELECT [columns]
-  FROM [table]
-  WHERE [attribute] NOT LIKE "_A%";
+SELECT column1, column2, column3, ...
+  FROM table_name
+  WHERE column NOT LIKE "_A%";
 ```
 #### CREATE
 The operations can be used directly in the MySQL server or written on a file along with the INSERT operations and read and ran into the server later.
@@ -202,39 +202,40 @@ There is two options to create new databases.<br>
 Option 1: Don't create a new one on top of an old one.
 ```mysql
 -- Ensures if the database already exist it won't be overwrittten
-CREATE DATABASE IF NOT EXISTS [NameDB];
+CREATE DATABASE IF NOT EXISTS NameDB;
 ```
 Option 2: Ensure a new one is created (Will cause an error if the database does not already exist)
 ```mysql
 -- Erases the database and recreates it
-DROP DATABASE [NameDB];
-CREATE DATABASE [NameDB];
+DROP DATABASE NameDB;
+CREATE DATABASE NameDB;
 ```
 
 * A database name usually has a first capitalized letter and ends with a capitalized DB, i.e. CitiesDB
 
 Both option of database creation can also be used together to ensure less error.
 ```mysql
-DROP DATABASE IF EXISTS [NameDB];
-CREATE DATABASE IF NOT EXISTS [NameDB];
+DROP DATABASE IF EXISTS NameDB;
+CREATE DATABASE IF NOT EXISTS NameDB;
 ```
 ##### TABLE
 There is also two options to create new tables. The same logic can also be used to combine both options.<br>
 Option 1: Don't create a table with the same name as an existing one
 ```mysql
-CREATE TABLE IF NOT EXISTS [table_name] (...);
+CREATE TABLE IF NOT EXISTS table_name (...);
 ```
 Option 2: Ensure a new fresh table is created
 ```mysql
-DROP TABLE [table_name];
-CREATE TABLE [table_name];
+DROP TABLE table_name;
+CREATE TABLE table_name;
 ```
 When creating a new table, one should add parameters to the table
 ```mysql
-CREATE TABLE [table_name] (
+CREATE TABLE table_name (
   column_1 DATATYPE_CONSTRAINT(S),
   column_2 DATATYPE_CONSTRAINT(S),
-  PRIMARY KEY (column_1,...)
+  PRIMARY KEY (column_1),
+  ...
 );
 ```
 Example of a table creation taken from Dr. Beiko's slides:
