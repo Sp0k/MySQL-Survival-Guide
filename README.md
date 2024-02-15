@@ -2,8 +2,11 @@
 This is my personal MySQL help file. It is catered for Ubuntu.
 
 It was written for Dalhousie's CSCI 2141: Intro to Databases.
+That being said, this guide does not talk about the theory seen in class and the
+information seen about databases. It only focuses on how to code in MySQL.
 
-Last Updated: 2024-02-09
+Last Updated: 2024-02-15<br>
+Up to: Week 4
 
 author: Gab Savard<br>
 Based on Dr. Beiko and Dr. Malloch's work
@@ -16,6 +19,8 @@ Based on Dr. Beiko and Dr. Malloch's work
     2. [Create](#CREATE)
     3. [Alter](#ALTER)
 4. [Aggregation](#Aggregation)
+5. [Connecting tables](#Connecting)
+6. [Multivalued attributes](#Multivalued)
 
 ## Utilities for MySQL <a name="utilities"></a>
 #### Start the MySQL dbms
@@ -72,7 +77,7 @@ USE DatabaseDB
 * Usually, databases name will be capitalized and have a DB at the end i.e. DatabaseDB. Table names will be lowercase.
 
 ## Queries
-#### SELECT
+#### SELECT <a id="SELECT"></a>
 The SELECT query generates customized results. It does NOT modify the data in the table!
 
 ```mysql
@@ -191,7 +196,7 @@ SELECT column1, column2, column3, ...
   FROM table_name
   WHERE column NOT LIKE "_A%";
 ```
-#### CREATE
+#### CREATE <a id="CREATE"></a>
 The operations can be used directly in the MySQL server or written on a file along with the INSERT operations and read and ran into the server later.
 
 ##### DATABASE
@@ -308,7 +313,7 @@ CREATE TABLE cities_simplified(
   UNIQUE(city_name, year_founded)
 );
 ```
-#### ALTER
+#### ALTER <a id="ALTER"></a>
 The ALTER query can be used to modified the data already saved in the
 tables.
 
@@ -535,3 +540,42 @@ SELECT MIN(column) FROM table_name;
 AVG returns nothing, the average of strings has no meaning.
 
 SUM does not apply to strings.
+
+#### Connecting Tables <a id="Connecting"></a>
+Connecting tables depends on the existence of attributes that are shared between tables.
+Common attributes can exists across different tables. Foreign keys can be used to make
+the relationship between those tables explicit, and impose important constraints.
+
+NOTE: The foreign key attribute does not need to have the same name as the primary-key
+attribute in the parent table!
+
+##### Foreign keys
+<strong>FOREIGN KEY:</strong><br>
+A foreign key is a primary key from a parent table placed into a dependent table to create a 
+common attribute. The foreign key must be <u>unique</u>. The foreign key must be constrained
+to ensure referential integrity. Furthermore, the referenced attribute can be any candidate
+key (including composite key).
+
+<strong>REFERENTIAL INTEGRITY:</strong><br>
+A condition by which a dependent table's foreign key entry must have either a null entry, or 
+a matching entry in the primary key or the related table.
+
+##### Creating foreign keys
+\* <u>The parent table must already exist before the foreign-key relationship is created!</u> *<br>
+A foreign key can be added during the creation of a new table.
+```mysql
+CREATE TABLE IF NOT EXISTS table_2 (
+  column_1 DATATYPE constraint UNIQUE,
+  column_2 DATATYPE constraint,
+  column_3 DATATYPE constraint,
+  ...
+  PRIMARY KEY(column_1),
+  FOREIGN KEY(column_2) REFERENCES table_1(column_ref)
+);
+```
+Reminder on how to add a foreign key to an already existing table:
+```mysql
+ALTER TABLE table_name 
+  ADD FOREIGN KEY (column_name) 
+  REFERENCES parent_table(parent_column_name);
+```
