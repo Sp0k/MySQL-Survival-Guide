@@ -5,7 +5,7 @@ It was written for Dalhousie's CSCI 2141: Intro to Databases.
 
 Last Updated: 2024-02-09
 
-@author: Gab Savard<br>
+author: Gab Savard<br>
 Based on Dr. Beiko and Dr. Malloch's work
 
 ## File contents
@@ -57,9 +57,6 @@ or<br>readMySQL [filename] (Personal script)
 ** <em>All of these can also be done through workbench</em> **
 
 ## Inside MySQL-Server <a name="inside"></a>
-### Navigation
-You will need specific commands to traverse the dbms. They are listed below
-
 #### SHOW
 The equivalent of 'ls' in bash.
 ```mysql
@@ -68,7 +65,7 @@ SHOW DATABASES
 SHOW TABLES
 ```
 #### USE
-Opens the table or database requested
+Opens the database specified
 ```mysql
 USE DatabaseDB
 ```
@@ -535,6 +532,6 @@ MIN returns the first value in alphabetical order
 ```mysql
 SELECT MIN(column) FROM table_name;
 ```
-AVG returns nothing, the average of strings as no meaning.
+AVG returns nothing, the average of strings has no meaning.
 
 SUM does not apply to strings.
