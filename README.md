@@ -2,11 +2,11 @@
 This is my personal MySQL help file. It is catered for Ubuntu.
 
 It was written for Dalhousie's CSCI 2141: Intro to Databases.
-That being said, this guide does not talk about the theory seen in class and the
+That being said, this guide does not cover about the theory seen in class and the
 information seen about databases. It only focuses on how to code in MySQL.
 
-Last Updated: 2024-02-15<br>
-Up to: Week 4
+Last Updated: 2024-02-18<br>
+Up to: Week 5
 
 author: Gab Savard<br>
 Based on Dr. Beiko and Dr. Malloch's work
@@ -15,12 +15,17 @@ Based on Dr. Beiko and Dr. Malloch's work
 1. [Utilities for MySQL](#utilities)
 2. [Inside MySQL-Server](#inside)
 3. [Queries](#Queries)
-    1. [Select](#SELECT)
-    2. [Create](#CREATE)
-    3. [Alter](#ALTER)
+    1. [SELECT](#SELECT)
+    2. [CREATE](#CREATE)
+    3. [ALTER](#ALTER)
 4. [Aggregation](#Aggregation)
-5. [Connecting tables](#Connecting)
-6. [Multivalued attributes](#Multivalued)
+5. [Connecting Tables](#Connecting)
+6. [Table Joins](#table_joins)
+7. [JOIN](#Joins)
+    1. [CROSS JOIN](#CROSS)
+    2. [INNER JOIN](#INNER)
+    3. [NATURAL JOIN](#NATURAL)
+    4. [OUTER JOIN](#OUTER)
 
 ## Utilities for MySQL <a name="utilities"></a>
 #### Start the MySQL dbms
@@ -261,6 +266,11 @@ CREATE TABLE cities_simplified (
 - INT: Integer (signed by default), signed range is (-2147483647, 2147483647)
 - FLOAT, DOUBLE: 32-bit/64-bit floating point
 - DECIMAL(x,y): x represent the total digits, y represent the number of digits after the decimal point. (ex: DECIMAL(314, 2) = 3.14).
+
+<strong>Other datatypes:</strong>
+- DATE: Holds a string in the format yyyy-mm-dd
+- TIME: Saves a time value in the format hh:mm:ss[.fraction] -> The time datatype has a lot of prebuilt function like the TIMEDIFF that
+will calculate the difference between two time values.
 
 ##### CONSTRAINTS
 Define limitations on columns. You cannot insert data into a table
@@ -579,3 +589,163 @@ ALTER TABLE table_name
   ADD FOREIGN KEY (column_name) 
   REFERENCES parent_table(parent_column_name);
 ```
+#### Table Joins <a id="table_joins"></a>
+So far, this guide has been over how to interact with one table at a time. But sometimes, like
+mentioned earlier, one could want to retrieve information that is stored across different tables.
+For example: The information of a developer of a specific video game in a table. Table joins 
+combine data from two or more tables to identify associations between entities.
+
+For now, this guide has shown the following code:
+```mysql
+SELECT column_names
+  FROM table_name
+  WHERE conditions
+  GROUP BY criterion
+  HAVING criterion
+  ORDER BY criterion
+  LIMIT row_count;
+```
+This lets a user get all the information they would want from one table. But, MySQL lets them also
+request information from different tables in a single statement. The code would now look like this:
+```mysql
+SELECT column_names
+  FROM table_1 JOIN table_2
+    ON (column_name1 = column_name2)/USING(colname) -- USING is simpler to use, in my opinion
+  WHERE conditions
+  GROUP BY criterion
+  HAVING criterion
+  ORDER BY criterion
+  LIMIT row_count;
+```
+##### Referencing Tables
+Selecting columns when there is multiple tables in the statement looks a little like using objects
+when coding with Java. As one write their query, they have to specify which table to get the
+information from using either the name of the table or an alias.
+```mysql
+SELECT t1.column_1, t1.column_2, t1.column_3
+  FROM table_1 t1;
+```
+Using aliases or table names like the example above is unnecessary when there is only one table,
+but essential the moment the statement requires two or more tables.
+```mysql
+SELECT t1.column_1, t1.column_2, t2.column_a
+  FROM table_1 t1 JOIN table_2 t2 USING(column_a);
+```
+In the example above, the column_a would require to be the foreign key used to connect the two tables.
+
+<strong>What about multiple foreign keys?</strong><br>
+A table can have multiple keys pointing to the same key, it just means that at least one of the keys'
+name will not be the same as the parent table's key it is referencing.
+
+#### JOIN <a id="Joins"></a>
+Before continuing with the code, I think it is important to go over a little theory about joins:
+- CROSS JOIN: Join every row in table 1 with every row in table 2
+- INNER JOIN: Join two tables on some column, returning no results for non-matching rows
+- NATURAL JOIN: Join two tables using every shared column name
+- (LEFT, RIGHT, FULL) OUTER JOIN: Join two tables, potentially including some unmatched rows
+
+##### CROSS JOIN <a id="CROSS"></a>
+The CROSS JOIN, sometimes referred to as the most basic join, combines every row of Table 1 with every
+row of Table 2. It yields the Cartesian product, which is usually not very useful on its own.
+```mysql
+SELECT * FROM table_name1 CROSS JOIN table_name2;
+```
+<strong>Old Syntax</strong><br>
+There also exists a different way to do the CROSS JOIN operation using an older syntax. It consists of
+ replacing the 'CROSS JOIN' terms themselves by a ','. This makes the code more compact but 
+also less explicit, which, when writing databases with multiple programmer, would be bad.
+```mysql
+SELECT * FROM table_name1, table_name2;
+```
+To give an example of how the math would work, if one was to use a CROSS JOIN on a table of 4 rows and
+6 columns and another table of 4 rows and 5 columns, then they would find themselves with a combined
+table of 16 rows and 11 columns.
+
+<strong>Restricting the operation</strong><br>
+Using the Cartesian product is not always a good idea though, as it would match informations in ways
+that don't necessarily make sense. Like matching an information on an entity that isn't stored in that
+specific row for example. In order to solve this problem, one would have to establish a restriction
+using the WHERE keyword, for example:
+```mysql
+SELECT *
+  FROM table_name1 t1 CROSS JOIN table_name2 t2
+  WHERE t1.column_1 = t2.column_A;
+```
+##### INNER JOIN <a id="INNER"></a>
+An INNER JOIN is the equivalent of a CROSS JOIN (everything * everything), but with a restriction to 
+the matching criteria.
+
+Just like the CROSS JOIN, the INNER JOIN also has an alternative form: JOIN. The four following commands
+would all yield the same result:
+```mysql
+SELECT * FROM table_name1, table_name2; -- Implicit terminology, restricts with WHERE
+```
+```mysql
+SELECT * FROM table_name1 CROSS JOIN table_name2; -- Explicit terminology, restricts with WHERE
+```
+```mysql
+SELECT * FROM table_name1 JOIN table_name2; -- Implicit terminology, restricts with ON/USING
+```
+```mysql
+SELECT * FROM table_name1 INNER JOIN table_name2; -- Explicit terminology, restricts with ON/USING
+```
+
+##### ON and USING operators
+JOIN...ON: Identify specific column names from each table to use for joining (they <u>do not</u> need to have the same names).
+
+JOIN...USING: Identify shared column names to use for joining (they <u>do</u> need to have the same names).
+
+ON is good because the joining columns don't need to have the same name. But both columns are returned in the result, which
+can be confusing/redundant.
+
+USING is good because it returns only one of the matching columns, but both must have the same name.
+
+##### NATURAL JOIN <a id="NATURAL"></a>
+The NATURAL JOIN will assume that the user wants to join all attributes with shared names between the two tables.
+Meaning, if two table have the same information, it will not repeat it. In case there is no common column, the 
+NATURAL JOIN will yield a Cartesian product. The same will happen if datatypes don't match.
+
+As great as the NATURAL JOIN is, Dr. Beiko and Dr. Malloch don't recommend its use. It saves some complexity, but
+is completely sensitive to the database design, it makes assumptions and has a weird unintuitive behavior if 
+nothing is shared.
+
+##### OUTER JOIN <a id="OUTER"></a>
+An OUTER JOIN is the equivalent of a CROSS JOIN (everything * everything), restricted to matching 
+criteria, plus non-matching rows.
+
+Compared to the INNER JOIN, the OUTER JOIN will also include lines with no corresponding values. Or in simpler
+words: OUTER JOIN returns rows that match from both table and rows from one table that have no matches in the
+other.
+
+The OUTER JOIN also has "add-ons" for the command to specify which table to take the non-matching rows from:
+- LEFT OUTER JOIN: Every row in table 1 that doesn't match table 2
+- RIGHT OUTER JOIN: Every row in table 2 that doesn't match table 1 
+- FULL OUTER JOIN: Every row in both tables that doesn't match the other.
+
+Here is how one would write each of the commands for the different specifications:
+```mysql
+SELECT *
+  FROM table_name1 t1
+  LEFT OUTER JOIN table_name2 t2
+  ON t1.column_1 = t2.column_a;
+```
+```mysql
+SELECT *
+  FROM table_name1 t1
+  RIGHT OUTER JOIN table_name2 t2
+  ON t1.column_1 = t2.column_a;
+```
+```mysql
+SELECT *
+  FROM table_name1 t1
+  FULL OUTER JOIN table_name2 t2
+  ON t1.column_1 = t2.column_a
+```
+<strong>CAREFUL!!!!</strong><br>
+MySQL does not support the FULL OUTER JOIN
+
+##### SELF JOIN ?!
+A self join is not a different class of JOIN. It can be performed with any of the JOIN's seen above.
+The syntax and function are exactly the same, but it lets you explore very interesting connections
+in the data.
+
