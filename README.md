@@ -23,7 +23,7 @@ Up to: Week 5
 4. [Aggregation](#aggregation)
    1. [Count](#count)
    2. [Distinct](#distinct)
-   3. [Max, min, sum, avg](#max,-min,-sum,-avg)
+   3. [Max, min, sum, avg](#max-min-sum-avg)
 5. [Connecting Tables](#connecting-tables)
 6. [Table Joins](#table-joins)
 7. [JOINS](#joins)
