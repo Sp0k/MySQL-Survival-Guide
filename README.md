@@ -10,27 +10,27 @@ Up to: Week 5
 
 ## Table of contents
 
-1. Utilities
-2. Inside MySQL Server
-3. Queries
-   1. Select
-   2. Create
-   3. Alter
-   4. Insert
-   5. Update
-   6. Delete
-   7. Derived Attributes
-4. Aggregation
-   1. Count
-   2. Distinct
-   3. Max, min, sum, avg
-5. Connecting Tables
-6. Table Joins
-7. JOINS
-   1. CROSS JOIN
-   2. INNER JOIN
-   3. NATURAL JOIN
-   4. OUTER JOIN
+1. [Utilities](#utilities)
+2. [Inside MySQL Server](#inside-mysql-server)
+3. [Queries](#queries)
+   1. [Select](#select)
+   2. [Create](#create)
+   3. [Alter](#alter)
+   4. [Insert](#insert)
+   5. [Update](#update)
+   6. [Delete](#delete)
+   7. [Derived Attributes](#derived-attributes)
+4. [Aggregation](#aggregation)
+   1. [Count](#count)
+   2. [Distinct](#distinct)
+   3. [Max, min, sum, avg](#max,-min,-sum,-avg)
+5. [Connecting Tables](#connecting-tables)
+6. [Table Joins](#table-joins)
+7. [JOINS](#joins)
+   1. [CROSS JOIN](#cross-join)
+   2. [INNER JOIN](#inner-join)
+   3. [NATURAL JOIN](#natural-join)
+   4. [OUTER JOIN](#outer-join)
 
 ## Utilities
 
